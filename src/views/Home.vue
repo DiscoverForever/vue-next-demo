@@ -48,9 +48,9 @@ const onInsert = (index: number) => {
   state.list.splice(index + 1, 0, { id: getMaxId(state.list) + 1, title: '' })
 }
 
-const getMaxId = (list: { id: number, title: string }[]): number => {
+const getMaxId = (list: Array<{ id: number, title: string }>): number => {
   if (state.list.length === 0) return 0
-  return Math.max(...state.list.map(item => item.id)
+  return Math.max(...state.list.map(item => item.id))
 }
 
 watch(() => state.list, () => {
