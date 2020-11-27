@@ -17,5 +17,5 @@ export default function useMouse() {
 
   onUnmounted(() => document.removeEventListener('mousemove', onMouseMove));
 
-  return toRefs(position);
+  return toRefs(position)
 }

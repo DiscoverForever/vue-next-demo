@@ -1,18 +1,19 @@
 <template>
   <div class="todo">
     <div class="header">
-      <h1 class="title">TODO {{x}} {{y}}</h1>
-      <button class="btn-create" @click="onCreate">+</button>
+      <h1 class="title">TODO</h1>
+      <button class="btn-create" @click="onCreate(list)">+</button>
     </div>
     <ul class="todo-list">
       <li class="todo-item" v-for="(todo, index) in list" :key="index">
         <label class="label">{{ todo.id }}</label>
         <input type="text" :value="todo.text" @input="todo.text = $event.target.value">
-        <button @click="onDelete(index)">-</button>
-        <button @click="onInsert(index)">+</button>
+        <button @click="onDelete(list, index)">-</button>
+        <button @click="onInsert(list, index)">+</button>
       </li>
     </ul>
   </div>
+  <v-modal v-model="dialogVisible" @confirm="onConfirm" />
 </template>
 
 <script lang="ts">
@@ -30,53 +31,49 @@ import {
 } from 'vue'
 
 import useMouse from '../components/mouse'
+import Modal from '../components/modal/index.vue'
 
 interface Todo {
-  list: { id: number; title: string }[]
-}
-const state = reactive<Todo>({
-  list: [],
-})
-
-const getMaxId = (list: Array<{ id: number; title: string }>): number => {
-  if (state.list.length === 0) return 0
-  return Math.max(...state.list.map((item) => item.id))
+  id: number
+  title: string
 }
 
-const onCreate = () => {
-  state.list.push({ id: getMaxId(state.list) + 1, title: '' })
+const getMaxId = (list: Array<Todo>): number => {
+  console.log(list)
+  if (list.length === 0) return 0
+  return Math.max(...list.map((item) => item.id))
 }
 
-const onDelete = (index: number) => {
-  state.list.splice(index, 1)
-}
-const onInsert = (index: number) => {
-  state.list.splice(index + 1, 0, { id: getMaxId(state.list) + 1, title: '' })
+const onCreate = (list: Array<Todo>) => {
+  list.push({ id: getMaxId(list) + 1, title: '' })
 }
 
-watch(() => state.list, () => {
-  console.log('state.list has change')
-}, {
-  deep: true,
-  immediate: true
-})
+const onDelete = (list: Array<Todo>, index: number) => {
+  list.splice(index, 1)
+}
 
-// watchEffect(() => {
-//   console.log(state.list)
-// })
+const onInsert = (list: Array<Todo>, index: number) => {
+  list.splice(index + 1, 0, { id: getMaxId(list) + 1, title: '' })
+}
 
 export default defineComponent({
   name: 'Todo',
+  components: {
+    'v-modal': Modal
+  },
   setup(props) {
-    onBeforeMount(() => console.log('onBeforeMount'))
-    onBeforeUpdate(() => console.log('onBeforeUpdate'))
-    const position = useMouse()
+    const list = reactive<Todo[]>([])
+    const dialogVisible = ref(true)
+    const onConfirm = () => {
+      console.log('confirm')
+    }
     return {
-      ...position,
-      list: state.list,
+      list,
+      dialogVisible,
       onCreate,
       onDelete,
-      onInsert
+      onInsert,
+      onConfirm
     }
   }
 })
