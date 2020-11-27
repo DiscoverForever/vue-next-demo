@@ -29,14 +29,20 @@ import {
   onBeforeUpdate,
 } from 'vue'
 
-import { useMouse } from '../components/mouse'
+import useMouse from '../components/mouse'
 
 interface Todo {
-  list: { id: number, title: string }[]
+  list: { id: number; title: string }[]
 }
 const state = reactive<Todo>({
   list: [],
 })
+
+const getMaxId = (list: Array<{ id: number; title: string }>): number => {
+  if (state.list.length === 0) return 0
+  return Math.max(...state.list.map((item) => item.id))
+}
+
 const onCreate = () => {
   state.list.push({ id: getMaxId(state.list) + 1, title: '' })
 }
@@ -46,11 +52,6 @@ const onDelete = (index: number) => {
 }
 const onInsert = (index: number) => {
   state.list.splice(index + 1, 0, { id: getMaxId(state.list) + 1, title: '' })
-}
-
-const getMaxId = (list: Array<{ id: number, title: string }>): number => {
-  if (state.list.length === 0) return 0
-  return Math.max(...state.list.map(item => item.id))
 }
 
 watch(() => state.list, () => {
@@ -69,10 +70,9 @@ export default defineComponent({
   setup(props) {
     onBeforeMount(() => console.log('onBeforeMount'))
     onBeforeUpdate(() => console.log('onBeforeUpdate'))
-    const {x, y} = useMouse()
+    const position = useMouse()
     return {
-      x,
-      y,
+      ...position,
       list: state.list,
       onCreate,
       onDelete,
