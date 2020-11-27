@@ -2,7 +2,7 @@ import {
   onMounted, onUnmounted, reactive, toRefs,
 } from 'vue';
 
-export function useMouse() {
+export default function useMouse() {
   const position = reactive({
     x: 0,
     y: 0,
