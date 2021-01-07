@@ -11,8 +11,8 @@
         </div>
         <div class="modal-footer">
           <slot name="footer">
-            <button @click="handleClose">取消</button>
-            <button @click="handleConfirm">确认</button>
+            <el-button @click="handleClose">取消</el-button>
+            <el-button @click="handleConfirm" type="primary">确认</el-button>
           </slot>
         </div>
       </div>
@@ -22,9 +22,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-
+import Button from '../button/index.vue'
 
 export default defineComponent({
+  components: {
+    'el-button': Button
+  },
   props: {
     title: {
       type: String,

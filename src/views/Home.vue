@@ -13,7 +13,9 @@
       </li>
     </ul>
   </div>
-  <v-modal v-model="dialogVisible" @confirm="onConfirm" />
+  <v-modal v-model="dialogVisible" @confirm="onConfirm">
+    <div>content</div>
+  </v-modal>
 </template>
 
 <script lang="ts">
