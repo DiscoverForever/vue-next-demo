@@ -9,9 +9,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'ElButton',
-  emits: {
-    click: (payload) => true
-  },
+  emits: ['click'],
   props: {
     /**
      * 类型
