@@ -14,6 +14,7 @@ module.exports = {
   rules: {
     'semi': 'off',
     'comma': 'off',
+    'no-plusplus': 'off',
     'comma-dangle': 'off',
     '@typescript-eslint/member-delimiter-style': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
