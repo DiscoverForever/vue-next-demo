@@ -11,6 +11,7 @@
       class="input"
       type="text"
       :value="displayValue"
+      :placeholder="placeholder"
       @input="handleInput"
       @blur="handleBlur"
       @keydown.up.prevent="increase"
@@ -27,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watchEffect, computed, watch } from 'vue'
+import { defineComponent, ref, computed, watch } from 'vue'
 
 export default defineComponent({
   name: 'InputNumber',
@@ -39,18 +40,29 @@ export default defineComponent({
     },
     max: {
       type: Number,
-      default: 5,
+      default: Infinity,
     },
     min: {
       type: Number,
-      default: 0,
+      default: -Infinity,
+    },
+    step: {
+      type: Number,
+      default: 1,
+    },
+    placeholder: {
+      type: String,
     },
   },
   setup(props, { emit }) {
     const displayValue = ref<string>(props.modelValue?.toString() ?? '')
     const currentValue = ref<number>(props.modelValue)
-    const increaseDisabled = computed(() => currentValue.value >= props.max)
-    const decreaseDisabled = computed(() => currentValue.value <= props.min)
+    const increaseDisabled = computed(
+      () => currentValue.value + props.step >= props.max
+    )
+    const decreaseDisabled = computed(
+      () => currentValue.value - props.step <= props.min
+    )
     /**
      * 设置显示值
      */
@@ -87,7 +99,7 @@ export default defineComponent({
      */
     const increase = () => {
       if (!increaseDisabled.value) {
-        setCurrentValue(currentValue.value + 1)
+        setCurrentValue(currentValue.value + props.step)
         setDisplayValue(currentValue.value)
       }
     }
@@ -97,7 +109,7 @@ export default defineComponent({
      */
     const decrease = () => {
       if (!decreaseDisabled.value) {
-        currentValue.value--
+        setCurrentValue(currentValue.value - props.step)
         setDisplayValue(currentValue.value)
         emit('update:modelValue', currentValue.value)
       }
@@ -148,25 +160,29 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+$theme-color: #409eff;
 .input-number {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: relative;
   height: 40px;
   width: 180px;
-  border: 1px solid #dcdfe6;
-  border-radius: 4px;
   overflow: hidden;
   .input {
+    position: absolute;
+    top: 0;
+    left: 0;
     display: inline-block;
     height: 100%;
-    flex: 1;
+    width: 100%;
+    padding: 0 40px;
     text-align: center;
     min-width: 0;
-    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    border: 1px solid #dcdfe6;
     &:focus {
       border: none;
       outline: none;
+      border: 1px solid $theme-color;
     }
   }
   .disabled {
@@ -176,26 +192,40 @@ export default defineComponent({
     }
   }
   .decrease {
+    position: absolute;
+    top: 1px;
+    left: 1px;
     cursor: pointer;
-    flex: 0 0 40px;
-    width: 40px;
-    height: 100%;
-    line-height: 40px;
+    width: 38px;
+    height: 38px;
+    line-height: 38px;
     font-size: 20px;
     display: inline-block;
     background: #f5f7fa;
     border-right: 1px solid #f5f7fa;
+    user-select: none;
+    z-index: 200;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    overflow: hidden;
   }
   .increase {
+    position: absolute;
+    top: 1px;
+    right: 1px;
     cursor: pointer;
-    flex: 0 0 40px;
-    width: 40px;
-    height: 100%;
-    line-height: 40px;
+    width: 38px;
+    height: 38px;
+    line-height: 38px;
     font-size: 20px;
     display: inline-block;
     background: #f5f7fa;
     border-left: 1px solid #f5f7fa;
+    user-select: none;
+    z-index: 200;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    overflow: hidden;
   }
 }
 </style>

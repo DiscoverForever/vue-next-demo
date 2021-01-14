@@ -1,5 +1,10 @@
 <template>
-  <input-number v-model="inputVal"></input-number>
+  <input-number
+    v-model="inputVal"
+    :step="2"
+    :max="11"
+    :min="-3"
+  ></input-number>
 </template>
 
 <script>
