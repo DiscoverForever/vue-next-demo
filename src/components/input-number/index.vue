@@ -36,23 +36,23 @@ export default defineComponent({
   props: {
     modelValue: {
       type: Number,
-      default: 0,
+      default: 0
     },
     max: {
       type: Number,
-      default: Infinity,
+      default: Infinity
     },
     min: {
       type: Number,
-      default: -Infinity,
+      default: -Infinity
     },
     step: {
       type: Number,
-      default: 1,
+      default: 1
     },
     placeholder: {
-      type: String,
-    },
+      type: String
+    }
   },
   setup(props, { emit }) {
     const displayValue = ref<string>(props.modelValue?.toString() ?? '')
@@ -90,7 +90,7 @@ export default defineComponent({
         setDisplayValue(value)
       },
       {
-        immediate: true,
+        immediate: true
       }
     )
 
@@ -153,9 +153,9 @@ export default defineComponent({
       increaseDisabled,
       decreaseDisabled,
       handleBlur,
-      handleInput,
+      handleInput
     }
-  },
+  }
 })
 </script>
 
