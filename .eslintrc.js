@@ -17,6 +17,7 @@ module.exports = {
     'no-plusplus': 'off',
     'comma-dangle': 'off',
     '@typescript-eslint/member-delimiter-style': 'off',
+    'object-curly-newline': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
   },
