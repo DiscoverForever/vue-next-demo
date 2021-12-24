@@ -4,33 +4,29 @@
   </button>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+import { defineProps, defineEmit, useContext } from 'vue'
 
-export default defineComponent({
-  name: 'ElButton',
-  emits: {
-    /**
+const emits = defineEmit({
+  /**
      * 事件发出前验证
      */
-    click: (event: Event) => true
-  },
-  props: {
-    /**
+  click: (event: Event) => true
+})
+
+const props = defineProps({
+  /**
      * 类型
      */
-    type: {
-      type: String,
-      default: null
-    }
-  },
-  setup(props, ctx) {
-    const handleClick = (event: Event) => ctx.emit('click', event)
-    return {
-      handleClick
-    }
+  type: {
+    type: String,
+    default: 'primary'
   }
 })
+
+const ctx = useContext()
+
+const handleClick = (event: Event) => ctx.emit('click', event)
 </script>
 
 <style lang="scss">

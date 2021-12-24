@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Modal from '../components/modal/index.vue'
+import Button from '../components/button/index.vue'
 import InputNumber from '../components/input-number/index.vue'
 import Home from '../views/Home.vue'
 import Example from '../views/example.vue'
@@ -24,6 +25,11 @@ const routes: RouteRecordRaw[] = [
     path: '/example',
     name: 'Example',
     component: Example,
+  },
+  {
+    path: '/button',
+    name: 'Button',
+    component: Button,
   },
 ];
 
