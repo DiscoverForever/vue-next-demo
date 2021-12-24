@@ -4,7 +4,7 @@
   </button>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -13,7 +13,7 @@ export default defineComponent({
     /**
      * 事件发出前验证
      */
-    click: (payload) => true
+    click: (event: Event) => true
   },
   props: {
     /**
@@ -25,7 +25,7 @@ export default defineComponent({
     }
   },
   setup(props, ctx) {
-    const handleClick = (event) => ctx.emit('click', event)
+    const handleClick = (event: Event) => ctx.emit('click', event)
     return {
       handleClick
     }
