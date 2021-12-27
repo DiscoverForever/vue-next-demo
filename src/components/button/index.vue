@@ -6,18 +6,17 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance } from 'vue'
-
 const emits = defineEmits({
   /**
-     * 事件发出前验证
-     */
+   * 事件发出前验证
+   */
   click: (event: Event) => true
 })
 
 const props = defineProps({
   /**
-     * 类型
-     */
+   * 类型
+   */
   type: {
     type: String,
     default: 'primary'
