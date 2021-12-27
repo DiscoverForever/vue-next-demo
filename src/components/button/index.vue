@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, defineEmit, useContext } from 'vue'
+import { getCurrentInstance } from 'vue'
 
-const emits = defineEmit({
+const emits = defineEmits({
   /**
      * 事件发出前验证
      */
@@ -24,9 +24,10 @@ const props = defineProps({
   }
 })
 
-const ctx = useContext()
+const ctx = getCurrentInstance()
 
-const handleClick = (event: Event) => ctx.emit('click', event)
+const handleClick = (event: Event) => ctx?.emit('click', event)
+
 </script>
 
 <style lang="scss">
@@ -58,3 +59,11 @@ const handleClick = (event: Event) => ctx.emit('click', event)
     border-color: #409eff;
 }
 </style>
+
+function useContext() {
+  throw new Error("Function not implemented.")
+}
+
+function useContext() {
+  throw new Error("Function not implemented.")
+}
