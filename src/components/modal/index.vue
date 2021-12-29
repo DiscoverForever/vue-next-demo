@@ -3,7 +3,7 @@
     <div class="mask" @click="handleClose">
       <div class="modal" @click.stop>
         <div class="modal-header">
-          <span class="title">{{title}}</span>
+          <span class="title">{{ title }}</span>
           <span class="icon-close" @click="handleClose">x</span>
         </div>
         <div class="modal-content">
@@ -11,8 +11,8 @@
         </div>
         <div class="modal-footer">
           <slot name="footer">
-            <el-button @click="handleClose">取消</el-button>
-            <el-button @click="handleConfirm" type="primary">确认</el-button>
+            <ElButton @click="handleClose">取消</ElButton>
+            <ElButton @click="handleConfirm" type="primary">确认</ElButton>
           </slot>
         </div>
       </div>
@@ -20,44 +20,37 @@
   </teleport>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import Button from '../button/index.vue'
+<script lang="ts" setup>
+import ElButton from '../button/index.vue'
 
-export default defineComponent({
-  components: {
-    'el-button': Button
-  },
-  props: {
-    title: {
-      type: String,
-      default: '提示'
-    },
-    modelValue: {
-      type: Boolean,
-      default: false
-    },
-    beforeClose: {
-      type: Function as PropType<() => boolean>,
-      default: () => true
-    }
-  },
-  setup(props, ctx) {
-    const handleClose = () => ctx.emit('update:modelValue', false)
-    const handleConfirm = () => {
-      if (props.beforeClose()) {
-        ctx.emit('update:modelValue', false)
-        ctx.emit('confirm')
-      } else {
-        ctx.emit('confirm')
-      }
-    }
-    return {
-      handleClose,
-      handleConfirm
-    }
-  }
+interface ModalProps {
+  title?: string
+  modelValue?: boolean
+  beforeClose?: () => boolean
+}
+
+const props = withDefaults(defineProps<ModalProps>(), {
+  title: '提示',
+  modelValue: false,
+  beforeClose: () => true
 })
+
+const emit = defineEmits<{
+  (e: 'confirm'): void
+  (e: 'update:modelValue', value: boolean): void
+}>()
+
+const handleClose = () => emit('update:modelValue', false)
+
+const handleConfirm = () => {
+  if (props.beforeClose()) {
+    emit('update:modelValue', false)
+    emit('confirm')
+  } else {
+    emit('confirm')
+  }
+}
+
 </script>
 
 <style lang="scss" scope>
@@ -76,7 +69,7 @@ export default defineComponent({
     background: #fff;
     width: 30%;
     border-radius: 2px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     .modal-header {
       display: flex;
       justify-content: space-between;
