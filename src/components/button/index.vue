@@ -5,13 +5,9 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance } from 'vue'
-const emits = defineEmits({
-  /**
-   * 事件发出前验证
-   */
-  click: (event: Event) => true
-})
+const emit = defineEmits<{
+  (event: 'click', payload: Event): void
+}>()
 
 const props = defineProps({
   /**
@@ -23,9 +19,8 @@ const props = defineProps({
   }
 })
 
-const ctx = getCurrentInstance()
 
-const handleClick = (event: Event) => ctx?.emit('click', event)
+const handleClick = (event: Event) => emit('click', event)
 
 </script>
 

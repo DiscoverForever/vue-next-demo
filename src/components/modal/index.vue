@@ -36,8 +36,8 @@ const props = withDefaults(defineProps<ModalProps>(), {
 })
 
 const emit = defineEmits<{
-  (e: 'confirm'): void
-  (e: 'update:modelValue', value: boolean): void
+  (event: 'confirm'): void
+  (event: 'update:modelValue', payload: boolean): void
 }>()
 
 const handleClose = () => emit('update:modelValue', false)
