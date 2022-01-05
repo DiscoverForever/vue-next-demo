@@ -3,7 +3,7 @@
     {{ foo.bar }}
     <button @click="increase">increase</button>
     <button @click="test">{{loading}}</button>
-    <button @click="testRef">toRef</button>
+    <button @click="">toRef</button>
   </div>
 </template>
 <script lang="ts" setup>
