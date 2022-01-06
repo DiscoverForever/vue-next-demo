@@ -7,7 +7,7 @@
     <ul class="todo-list">
       <li class="todo-item" v-for="(todo, index) in list" :key="index">
         <label class="label">{{ todo.id }}</label>
-        <input type="text" :value="todo.text" @input="todo.text = $event.target.value">
+        <input type="text" v-model="todo.title">
         <button @click="onDelete(list, index)">-</button>
         <button @click="onInsert(list, index)">+</button>
       </li>
@@ -30,6 +30,7 @@ import {
   watchEffect,
   isReactive,
   onBeforeUpdate,
+InputHTMLAttributes,
 } from 'vue'
 
 import useMouse from '../components/mouse'
@@ -65,9 +66,8 @@ export default defineComponent({
   },
   setup(props) {
     const list = reactive<Todo[]>([])
-    const dialogVisible = ref(true)
+    const dialogVisible = ref(false)
     const onConfirm = () => {
-      console.log('confirm')
     }
     return {
       list,
