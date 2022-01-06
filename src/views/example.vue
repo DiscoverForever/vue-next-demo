@@ -7,18 +7,19 @@
   ></input-number>
 </template>
 
-<script>
+<script lang="ts">
+import { ref, defineComponent } from 'vue'
 import InputNumber from '../components/input-number/index.vue'
 
-export default {
+export default defineComponent({
   name: 'Example',
   components: {
     InputNumber
   },
-  setup(props) {
+  setup(props: any) {
     return {
-      inputVal: 0
+      inputVal: ref(0)
     }
   }
-}
+})
 </script>
