@@ -16,22 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  defineComponent,
-  ref,
-  toRefs,
-  watch,
-  computed,
-  reactive,
-  onBeforeMount,
-  watchEffect,
-  isReactive,
-  onBeforeUpdate,
-  InputHTMLAttributes,
-} from 'vue'
-
-import useMouse from '../components/mouse'
-import Modal from '../components/modal/index.vue'
+import { reactive, ref } from 'vue'
 
 interface Todo {
   id: number
@@ -58,8 +43,6 @@ const onInsert = (list: Array<Todo>, index: number) => {
 
 
 const list = reactive<Todo[]>([])
-const onConfirm = () => {
-}
 
 </script>
 <style lang="scss" scoped>
