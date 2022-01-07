@@ -13,12 +13,9 @@
       </li>
     </ul>
   </div>
-  <v-modal v-model="dialogVisible" @confirm="onConfirm">
-    <div>content</div>
-  </v-modal>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import {
   defineComponent,
   ref,
@@ -59,26 +56,11 @@ const onInsert = (list: Array<Todo>, index: number) => {
   list.splice(index + 1, 0, { id: getMaxId(list) + 1, title: '' })
 }
 
-export default defineComponent({
-  name: 'Todo',
-  components: {
-    'v-modal': Modal
-  },
-  setup(props) {
-    const list = reactive<Todo[]>([])
-    const dialogVisible = ref(false)
-    const onConfirm = () => {
-    }
-    return {
-      list,
-      dialogVisible,
-      onCreate,
-      onDelete,
-      onInsert,
-      onConfirm
-    }
-  }
-})
+
+const list = reactive<Todo[]>([])
+const onConfirm = () => {
+}
+    
 </script>
 <style lang="scss" scoped>
 .todo {
