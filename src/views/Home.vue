@@ -7,7 +7,7 @@
     <ul class="todo-list">
       <li class="todo-item" v-for="(todo, index) in list" :key="index">
         <label class="label">{{ todo.id }}</label>
-        <input type="text" v-model="todo.title">
+        <input type="text" v-model="todo.title" />
         <button @click="onDelete(list, index)">-</button>
         <button @click="onInsert(list, index)">+</button>
       </li>
@@ -27,7 +27,7 @@ import {
   watchEffect,
   isReactive,
   onBeforeUpdate,
-InputHTMLAttributes,
+  InputHTMLAttributes,
 } from 'vue'
 
 import useMouse from '../components/mouse'
@@ -60,7 +60,7 @@ const onInsert = (list: Array<Todo>, index: number) => {
 const list = reactive<Todo[]>([])
 const onConfirm = () => {
 }
-    
+
 </script>
 <style lang="scss" scoped>
 .todo {
